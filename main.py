@@ -2,10 +2,26 @@ import tkinter as tk
 from tkinter import messagebox
 
 questions = [
-    ("YOUR FAVORITE COLOR?", ["A : RED", "B : GREEN", "C : YELLOW", "D : BLUE"], "A"),
-    ("YOUR FAVORITE FOOD?", ["A : RICE", "B : KEBAB", "C : SALAD", "D : WATER"], "C"),
-    ("YOUR FAVORITE CAR?", ["A : BMW", "B : BENZ", "C : PORSCHE", "D : PARS"], "D")
+    (
+        "YOUR FAVORITE COLOR?",
+        ["A : RED", "B : GREEN", "C : YELLOW", "D : BLUE"],
+        "A"
+    ),
+    (
+        "YOUR FAVORITE FOOD?",
+        ["A : RICE", "B : KEBAB", "C : SALAD", "D : WATER"],
+        "C"
+    ),
+    (
+        "YOUR FAVORITE CAR?",
+        ["A : BMW", "B : BENZ", "C : PORSCHE", "D : PARS"],
+        "D"
+    )
 ]
+
+score = 0
+correct_answers = 0
+index = 0
 
 NORMAL_SCORE = 10
 HIGH_SCORE = 20
@@ -18,55 +34,58 @@ BLUE = "#00BFFF"
 WHITE = "#FFFFFF"
 GREEN = "#00FF99"
 
-score = 0
-correct_answers = 0
-index = 0
-
 window = tk.Tk()
 window.title("QUIZ BATTLE")
-window.geometry("800x650")
+window.geometry("800x600")
 window.resizable(False, False)
 window.configure(bg=BG)
 
 title = tk.Label(
     window, text="⚡ QUIZ BATTLE ⚡",
-    font=("Arial", 30, "bold"), bg=BG, fg=PURPLE
+    font=("Arial", 30, "bold"),
+    bg=BG, fg=PURPLE
 )
 title.pack(pady=(25, 5))
 
 subtitle = tk.Label(
     window, text="TEST YOUR KNOWLEDGE",
-    font=("Arial", 11, "bold"), bg=BG, fg=BLUE
+    font=("Arial", 11, "bold"),
+    bg=BG, fg=BLUE
 )
 subtitle.pack()
 
 score_frame = tk.Frame(
     window, bg=PANEL,
-    highlightbackground=PURPLE, highlightthickness=2
+    highlightbackground=PURPLE,
+    highlightthickness=2
 )
 score_frame.pack(pady=20, padx=50, fill="x")
 
 score_label = tk.Label(
     score_frame, text="SCORE: 0",
-    font=("Arial", 16, "bold"), bg=PANEL, fg=GREEN
+    font=("Arial", 16, "bold"),
+    bg=PANEL, fg=GREEN
 )
 score_label.pack(side="left", padx=25, pady=12)
 
 question_number = tk.Label(
     score_frame, text="QUESTION: 1 / 3",
-    font=("Arial", 16, "bold"), bg=PANEL, fg=WHITE
+    font=("Arial", 16, "bold"),
+    bg=PANEL, fg=WHITE
 )
 question_number.pack(side="right", padx=25, pady=12)
 
 question_frame = tk.Frame(
     window, bg=PANEL,
-    highlightbackground=BLUE, highlightthickness=2
+    highlightbackground=BLUE,
+    highlightthickness=2
 )
 question_frame.pack(padx=70, pady=10, fill="x")
 
 question_label = tk.Label(
     question_frame, text="",
-    font=("Arial", 22, "bold"), bg=PANEL, fg=WHITE, pady=25
+    font=("Arial", 22, "bold"),
+    bg=PANEL, fg=WHITE, pady=25
 )
 question_label.pack()
 
@@ -75,7 +94,12 @@ answers_frame.pack(pady=20)
 
 answer_buttons = []
 
-button_colors = ["#7B2CBF", "#0077B6", "#D00070", "#00695C"]
+button_colors = [
+    "#7B2CBF",
+    "#0077B6",
+    "#D00070",
+    "#00695C"
+]
 
 def check_answer(answer):
     global score, correct_answers, index
@@ -121,19 +145,8 @@ def show_question():
     for i in range(4):
         answer_buttons[i].config(
             text=question[1][i],
-            command=lambda x=chr(65 + i): check_answer(x),
-            state="normal"
+            command=lambda x=chr(65 + i): check_answer(x)
         )
-
-def restart_game():
-    global score, correct_answers, index
-
-    score = 0
-    correct_answers = 0
-    index = 0
-
-    restart_button.pack_forget()
-    show_question()
 
 def finish_game():
     percentage = (correct_answers / len(questions)) * 100
@@ -144,8 +157,6 @@ def finish_game():
 
     for button in answer_buttons:
         button.config(state="disabled")
-
-    restart_button.pack(pady=10)
 
     messagebox.showinfo(
         "GAME OVER",
@@ -178,4 +189,7 @@ for i in range(4):
         pady=10
     )
 
-    
+    answer_buttons.append(button)
+
+show_question()
+window.mainloop()
